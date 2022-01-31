@@ -14,42 +14,43 @@ import {
 	HStack,
 	IconButton,
 	Stack,
+	Text,
 } from "@chakra-ui/react";
-import {Link as ReactRouterLink } from "react-router-dom";
+import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import { MdOutlineClose, MdMenu } from "react-icons/md";
+import {AiFillControl} from "react-icons/ai";
 
-const NavLink = ({ children, href }: { children: ReactNode; href: string }) => (
-		<Link
-			as={ReactRouterLink}
-			to={href}
-			px={2}
-			py={1}
-			fontWeight="medium"
-			rounded={"md"}
-			_hover={{
-				textDecoration: "none",
-				color: "gray.700",
-			}}
-			_active={{
-				color: "green.700",
-			}}
-			color="gray.500">
-			{children}
-		</Link>
+const NavLink = ({ children, href, active }: { children: ReactNode; href: string, active: boolean}) => (
+	<Link
+		as={ReactRouterLink}
+		to={href}
+		px={2}
+		py={1}
+		fontWeight="medium"
+		fontSize="lg"
+		rounded={"md"}
+		_hover={{
+			textDecoration: "none",
+			color: "gray.700",
+		}}
+		_active={{
+			color: "green.700",
+		}}
+		color={active ? "gray.700" : "gray.500"}
+	>
+		{children}
+	</Link>
 );
 
-const Navbar = () => {
+const Navbar = ({ loggedIn }: { loggedIn: boolean }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	let links: { name: string; href: string }[] = [];
+	let links = loggedIn ? [{ name: "Home", href: "/home" }] : [{ name: "Login", href: "/login" }, {name: "About", href: "/about"}];
 
-		links = [
-			{ name: "Login", href: "/login" },
-			{ name: "Home", href: "/home" },
-		];
+	const location = useLocation();
 
 	return (
-		<Box bg="white" px={8} borderBottom="2px" borderColor="white">
-			<Flex h="8vh" alignItems={"center"} justifyContent={"space-between"}>
+		<Box bg="white" borderBottom="2px" borderColor="gray.200">
+			<Flex h="8vh" alignItems={"center"} justifyContent={"space-between"} width="80%" mx="auto">
 				<IconButton
 					colorScheme="gray"
 					size={"sm"}
@@ -59,24 +60,19 @@ const Navbar = () => {
 					onClick={isOpen ? onClose : onOpen}
 				/>
 				<HStack spacing={8} alignItems={"center"}>
-					<Box color="gray.700" fontSize="2xl" fontWeight="semibold">
-						<Link href="/">
-							Strings
-						</Link>
-					</Box>
+					<Text color="gray.700" fontSize="3xl" fontWeight="semibold">
+					<Link href="/">Strings</Link>
+					</Text>
 				</HStack>
 				<Flex alignItems={"center"}>
-					<HStack
-						mx={5}
-						as={"nav"}
-						spacing={2}
-						display={{ base: "none", md: "flex" }}>
+					<HStack as={"nav"} spacing={3} display={{ base: "none", md: "flex" }}>
 						{links.map((link) => (
-							<NavLink key={link.name} href={link.href}>
+							<NavLink key={link.name} href={link.href} active={link.href == location.pathname}>
 								{link.name}
 							</NavLink>
 						))}
 					</HStack>
+					{loggedIn && (
 						<Menu>
 							<MenuButton
 								as={Button}
@@ -84,7 +80,9 @@ const Navbar = () => {
 								variant={"link"}
 								cursor={"pointer"}
 								background="gray.700"
-								minW={0}>
+								minW={0}
+								ms={2}
+							>
 								<Avatar
 									size="sm"
 									name="Pritesh"
@@ -99,6 +97,7 @@ const Navbar = () => {
 								<MenuItem>Log out</MenuItem>
 							</MenuList>
 						</Menu>
+					)}
 				</Flex>
 			</Flex>
 
@@ -106,7 +105,7 @@ const Navbar = () => {
 				<Box pb={4} display={{ md: "none" }}>
 					<Stack as={"nav"} spacing={3}>
 						{links.map((link) => (
-							<NavLink key={link.name} href={link.href}>
+							<NavLink key={link.name} href={link.href} active={link.href == location.pathname}>
 								{link.name}
 							</NavLink>
 						))}

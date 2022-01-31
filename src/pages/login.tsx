@@ -1,4 +1,4 @@
-import { getAuthUrl } from "../api/auth";
+import { getAuthUrl } from "../services/api/auth";
 import React from "react";
 import { Link, Button, Text, Box, Heading, Center, Image } from "@chakra-ui/react";
 import { BiLinkExternal } from "react-icons/bi";
@@ -22,23 +22,27 @@ export function Login() {
 			</Heading>
 			<Box mt={10} mx="auto">
 				<Text fontSize="xl" align="center" fontWeight="medium">
-					View your most listened tracks, artists and genres and switch between 3 different time periods.<br/>
+					View your most listened tracks, artists and genres and switch between 3
+					different time periods.
+					<br />
 					Login with your spotify account, to see your track or artist ranking!
 				</Text>
-				<Center><Button
-					_hover={{ color: "gray.700", background: "#fff" }}
-					variant="outline"
-					color="#fff"
-					borderColor="#fff"
-					borderWidth={2}
-					py={6}
-					mt={10}
-					rightIcon={<BiLinkExternal />}
-				>
-					<Link href={url} isExternal>
+				<Center>
+					<Button
+						_hover={{ color: "gray.700", background: "#fff" }}
+						as={Link}
+						href={url}
+						variant="outline"
+						color="#fff"
+						borderColor="#fff"
+						borderWidth={2}
+						py={6}
+						mt={10}
+						rightIcon={<BiLinkExternal />}
+					>
 						Login with spotify
-					</Link>
-				</Button></Center>
+					</Button>
+				</Center>
 			</Box>
 		</Box>
 	);
