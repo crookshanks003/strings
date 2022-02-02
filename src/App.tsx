@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/navbar";
-import { About } from "./pages/about";
+
+import { QueryClient, QueryClientProvider } from "react-query";
+import { getRefreshedToken } from "./services/api/auth";
+import { setLocalStorage } from "./services/utils";
 
 import { Callback } from "./pages/callback";
 import { Home } from "./pages/home";
 import { Login } from "./pages/login";
-import { getRefreshedToken } from "./services/api/auth";
-import { setLocalStorage } from "./services/utils";
+import { Navbar } from "./components/navbar";
+import { Tracks } from "./pages/tracks/tracks";
+import { NotFound } from "./pages/notFound";
+import { Loader } from "./components/loader";
 
 function App() {
+	const queryClient = new QueryClient();
+	const [loading, setLoading] = useState(true);
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	useEffect(() => {
@@ -28,25 +34,35 @@ function App() {
 			}
 			setLoggedIn(true);
 		}
-	}, []);
+		setLoading(false);
+	});
 
-	return (
-		<>
-			<Navbar loggedIn={loggedIn} />
-			{!loggedIn ? (
+	if (loading) {
+		return <Loader />;
+	}
+
+	if (!loggedIn) {
+		return (
+			<QueryClientProvider client={queryClient}>
+				<Navbar loggedIn={loggedIn} />
 				<Routes>
 					<Route path="/login" element={<Login />} />
-					<Route path="/about" element={<About />} />
 					<Route path="/callback" element={<Callback setLoggedIn={setLoggedIn} />} />
 					<Route path="*" element={<Navigate to="/login" />} />
 				</Routes>
-			) : (
-				<Routes>
-					<Route path="/home" element={<Home />} />
-					<Route path="*" element={<Navigate to="/home" />} />
-				</Routes>
-			)}
-		</>
+			</QueryClientProvider>
+		);
+	}
+
+	return (
+		<QueryClientProvider client={queryClient}>
+			<Navbar loggedIn={loggedIn} />
+			<Routes>
+				<Route path="/home" element={<Home />} />
+				<Route path="tracks" element={<Tracks />} />
+				<Route path="*" element={<NotFound />} />
+			</Routes>
+		</QueryClientProvider>
 	);
 }
 
