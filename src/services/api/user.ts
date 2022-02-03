@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-import { Track } from "src/types";
+import { Artist, Track } from "src/types";
 
 type timeRange = "long_term" | "medium_term" | "short_term";
 
-interface TracksReturn {
+interface QueryReturn<T> {
 	href: string;
-	items: Track[];
+	items: T[];
 	limit: number;
 	total: number;
 }
@@ -19,5 +19,20 @@ export function getTopTracks(time_range: timeRange) {
 			Authorization: `Bearer ${access_token}`,
 		},
 	};
-	return client.get<any, AxiosResponse<TracksReturn>>(`/tracks?time_range=${time_range}&limit=50`, config);
+	return client.get<any, AxiosResponse<QueryReturn<Track>>>(
+		`/tracks?time_range=${time_range}&limit=50`,
+		config
+	);
+}
+
+export function getTopArtists(time_range: timeRange) {
+	let config = {
+		headers: {
+			Authorization: `Bearer ${access_token}`,
+		},
+	};
+	return client.get<any, AxiosResponse<QueryReturn<Artist>>>(
+		`/artists?time_range=${time_range}&limit=20`,
+		config
+	);
 }

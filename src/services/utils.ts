@@ -12,3 +12,7 @@ export function setLocalStorage({
 	if(refresh_token) localStorage.setItem("refresh_token", refresh_token);
 	localStorage.setItem("expires_at", date.setSeconds(date.getSeconds() + expires_in).toString());
 }
+
+export function clearLocalStorage(){
+	localStorage.clear();
+}

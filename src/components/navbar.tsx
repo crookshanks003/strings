@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, SetStateAction } from "react";
 import {
 	Box,
 	Flex,
@@ -9,16 +9,16 @@ import {
 	MenuButton,
 	MenuList,
 	MenuItem,
-	MenuDivider,
 	useDisclosure,
 	HStack,
 	IconButton,
 	Stack,
 	Text,
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink, useLocation } from "react-router-dom";
+import { Link as ReactRouterLink, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineClose, MdMenu } from "react-icons/md";
 import { AiFillControl } from "react-icons/ai";
+import { clearLocalStorage } from "src/services/utils";
 
 const NavLink = ({
 	children,
@@ -50,18 +50,26 @@ const NavLink = ({
 	</Link>
 );
 
-export const Navbar = ({ loggedIn }: { loggedIn: boolean }) => {
+export const Navbar = ({ loggedIn, setLoggedIn}: { loggedIn: boolean, setLoggedIn: React.Dispatch<SetStateAction<boolean>>}) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	let links = loggedIn
 		? [
 				{ name: "Home", href: "/home" },
 				{ name: "Tracks", href: "/tracks" },
+				{ name: "Artists", href: "/artists" },
 		  ]
 		: [
 				{ name: "Login", href: "/login" },
 		  ];
 
 	const location = useLocation();
+	const navigate = useNavigate();
+
+	const logOut = () => {
+		clearLocalStorage();
+		setLoggedIn(false);
+		navigate("/login")
+	}
 
 	return (
 		<Box bg="white" borderBottom="2px" borderColor="gray.200">
@@ -109,7 +117,7 @@ export const Navbar = ({ loggedIn }: { loggedIn: boolean }) => {
 								cursor={"pointer"}
 								background="gray.700"
 								minW={0}
-								ms={8}
+								ms={6}
 							>
 								<Avatar
 									size="sm"
@@ -120,9 +128,7 @@ export const Navbar = ({ loggedIn }: { loggedIn: boolean }) => {
 							</MenuButton>
 							<MenuList>
 								<MenuItem>Profile</MenuItem>
-								<MenuItem>Dashboard</MenuItem>
-								<MenuDivider />
-								<MenuItem>Log out</MenuItem>
+								<MenuItem onClick={logOut}>Log out</MenuItem>
 							</MenuList>
 						</Menu>
 					)}

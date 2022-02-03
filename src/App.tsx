@@ -12,6 +12,7 @@ import { Navbar } from "./components/navbar";
 import { Tracks } from "./pages/tracks/tracks";
 import { NotFound } from "./pages/notFound";
 import { Loader } from "./components/loader";
+import { Artists } from "./pages/artists/artists";
 
 function App() {
 	const queryClient = new QueryClient();
@@ -44,7 +45,7 @@ function App() {
 	if (!loggedIn) {
 		return (
 			<QueryClientProvider client={queryClient}>
-				<Navbar loggedIn={loggedIn} />
+				<Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
 				<Routes>
 					<Route path="/login" element={<Login />} />
 					<Route path="/callback" element={<Callback setLoggedIn={setLoggedIn} />} />
@@ -56,10 +57,11 @@ function App() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Navbar loggedIn={loggedIn} />
+			<Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
 			<Routes>
 				<Route path="/home" element={<Home />} />
 				<Route path="tracks" element={<Tracks />} />
+				<Route path="artists" element={<Artists />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</QueryClientProvider>

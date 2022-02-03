@@ -1,9 +1,9 @@
 import { Album } from ".";
-import { Artist } from "./artist";
+import { ArtistReference } from "./artist";
 
 export interface Track {
 	album: Album;
-	artists: Artist[];
+	artists: ArtistReference[];
 	available_markets: string[];
 	disc_number: 1;
 	duration_ms: 205164;

@@ -1,8 +1,8 @@
-import { Artist } from "./artist";
+import { ArtistReference } from "./artist";
 
 export interface Album {
 	album_type: string;
-	artists: Artist[];
+	artists: ArtistReference[];
 	available_markets: string[];
 	external_urls: { spotify: string };
 	href: string;
