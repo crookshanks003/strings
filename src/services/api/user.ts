@@ -10,7 +10,7 @@ interface QueryReturn<T> {
 	total: number;
 }
 
-const client = axios.create({ baseURL: "https://api.spotify.com/v1/me/top" });
+const client = axios.create({ baseURL: "https://api.spotify.com/v1/me/" });
 const access_token = localStorage.getItem("access_token");
 
 export function getTopTracks(time_range: timeRange) {
@@ -20,7 +20,7 @@ export function getTopTracks(time_range: timeRange) {
 		},
 	};
 	return client.get<any, AxiosResponse<QueryReturn<Track>>>(
-		`/tracks?time_range=${time_range}&limit=50`,
+		`top/tracks?time_range=${time_range}&limit=50`,
 		config
 	);
 }
@@ -32,7 +32,19 @@ export function getTopArtists(time_range: timeRange) {
 		},
 	};
 	return client.get<any, AxiosResponse<QueryReturn<Artist>>>(
-		`/artists?time_range=${time_range}&limit=20`,
+		`top/artists?time_range=${time_range}&limit=20`,
 		config
 	);
+}
+
+export function getRecentlyPlayed() {
+	let config = {
+		headers: {
+			Authorization: `Bearer ${access_token}`,
+		},
+	};
+	return client.get<
+		any,
+		AxiosResponse<QueryReturn<{ context: any; played_at: string; track: Track }>>
+	>("player/recently-played", config);
 }

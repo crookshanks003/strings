@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { QueryClient, QueryClientProvider } from "react-query";
+import {Box} from "@chakra-ui/react";
 import { getRefreshedToken } from "./services/api/auth";
 import { setLocalStorage } from "./services/utils";
 
@@ -13,6 +14,7 @@ import { Tracks } from "./pages/tracks/tracks";
 import { NotFound } from "./pages/notFound";
 import { Loader } from "./components/loader";
 import { Artists } from "./pages/artists/artists";
+import { RecentlyPlayed } from "./pages/recentlyPlayed";
 
 function App() {
 	const queryClient = new QueryClient();
@@ -62,6 +64,7 @@ function App() {
 				<Route path="/home" element={<Home />} />
 				<Route path="tracks" element={<Tracks />} />
 				<Route path="artists" element={<Artists />} />
+				<Route path="recent" element={<RecentlyPlayed />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</QueryClientProvider>

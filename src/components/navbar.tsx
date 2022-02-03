@@ -57,6 +57,7 @@ export const Navbar = ({ loggedIn, setLoggedIn}: { loggedIn: boolean, setLoggedI
 				{ name: "Home", href: "/home" },
 				{ name: "Tracks", href: "/tracks" },
 				{ name: "Artists", href: "/artists" },
+				{ name: "Recent", href: "/recent" },
 		  ]
 		: [
 				{ name: "Login", href: "/login" },

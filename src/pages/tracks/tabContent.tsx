@@ -24,7 +24,11 @@ export function TabContent({ items }: { items: Track[] }) {
 								</Text>
 							</HStack>
 						</Td>
-						<Td>{track.artists[0].name}</Td>
+						<Td>
+							<Link href={track.artists[0].external_urls.spotify} isExternal>
+								{track.artists[0].name}
+							</Link>
+						</Td>
 					</Tr>
 				))}
 			</Tbody>

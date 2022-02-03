@@ -17,7 +17,7 @@ export function Tracks() {
 	});
 
 	return (
-		<Box mt={16} width="80%" mx="auto">
+		<Box mt={16} width="80%" mx="auto" mb={8}>
 			<Heading as="h1" size="xl" color="gray.700">
 				Your Top Tracks
 			</Heading>
@@ -32,7 +32,7 @@ export function Tracks() {
 						{shortTermData.isLoading ? (
 							<Loader />
 						) : shortTermData.isError || !shortTermData.data ? (
-							<Heading as="h1" size="lg" color="red.500">
+							<Heading size="lg" color="red.500">
 								Something went wrong!
 							</Heading>
 						) : (
@@ -42,7 +42,7 @@ export function Tracks() {
 						{mediumTermData.isLoading ? (
 							<Loader />
 						) : mediumTermData.isError || !mediumTermData.data ? (
-							<Heading as="h1" size="lg" color="red.500">
+							<Heading size="lg" color="red.500">
 								Something went wrong!
 							</Heading>
 						) : (
@@ -52,7 +52,7 @@ export function Tracks() {
 						{longTermData.isLoading ? (
 							<Loader />
 						) : longTermData.isError || !longTermData.data ? (
-							<Heading as="h1" size="lg" color="red.500">
+							<Heading size="lg" color="red.500">
 								Something went wrong!
 							</Heading>
 						) : (
