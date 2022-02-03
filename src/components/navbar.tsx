@@ -62,14 +62,12 @@ export const Navbar = ({ loggedIn, setLoggedIn}: { loggedIn: boolean, setLoggedI
 				{ name: "Artists", href: "/artists" },
 				{ name: "Recent", href: "/recent" },
 		  ]
-		: [
-				{ name: "Login", href: "/login" },
-		  ];
+		: [ ];
 
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	const {data, isLoading, isError} = useQuery("profile", getUserProfile);
+	const {data, isLoading, isError} = useQuery("profile", getUserProfile, {enabled: loggedIn});
 
 	const logOut = () => {
 		clearLocalStorage();

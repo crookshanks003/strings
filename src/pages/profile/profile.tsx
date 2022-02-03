@@ -64,7 +64,7 @@ export function Profile() {
 					rightIcon={<BiLogOut />}
 					onClick={() => {
 						clearLocalStorage();
-						navigate("/login");
+						navigate("/home");
 					}}
 				>
 					Logout
