@@ -15,6 +15,7 @@ import { NotFound } from "./pages/notFound";
 import { Loader } from "./components/loader";
 import { Artists } from "./pages/artists/artists";
 import { RecentlyPlayed } from "./pages/recentlyPlayed";
+import { Profile } from "./pages/profile/profile";
 
 function App() {
 	const queryClient = new QueryClient();
@@ -65,6 +66,8 @@ function App() {
 				<Route path="tracks" element={<Tracks />} />
 				<Route path="artists" element={<Artists />} />
 				<Route path="recent" element={<RecentlyPlayed />} />
+				<Route path="profile" element={<Profile />} />
+				<Route path="/" element={<Navigate to="/home" />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</QueryClientProvider>

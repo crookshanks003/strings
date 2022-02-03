@@ -8,8 +8,7 @@ type tokenResponse = {
 	token_type: string;
 };
 
-const client = axios.create({ baseURL: "https://api.spotify.com/v1" });
-const scope = "user-top-read user-read-private user-read-recently-played user-library-read";
+const scope = "user-top-read user-read-private user-read-recently-played user-library-read user-read-currently-playing";
 const redirect_uri = "http://localhost:3000/callback/";
 
 export function getAuthUrl() {

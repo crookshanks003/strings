@@ -14,11 +14,14 @@ import {
 	IconButton,
 	Stack,
 	Text,
+    Spinner,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineClose, MdMenu } from "react-icons/md";
 import { AiFillControl } from "react-icons/ai";
 import { clearLocalStorage } from "src/services/utils";
+import { useQuery } from "react-query";
+import { getUserProfile } from "src/services/api/user";
 
 const NavLink = ({
 	children,
@@ -66,6 +69,8 @@ export const Navbar = ({ loggedIn, setLoggedIn}: { loggedIn: boolean, setLoggedI
 	const location = useLocation();
 	const navigate = useNavigate();
 
+	const {data, isLoading, isError} = useQuery("profile", getUserProfile);
+
 	const logOut = () => {
 		clearLocalStorage();
 		setLoggedIn(false);
@@ -109,7 +114,7 @@ export const Navbar = ({ loggedIn, setLoggedIn}: { loggedIn: boolean, setLoggedI
 							</NavLink>
 						))}
 					</HStack>
-					{loggedIn && (
+					{isLoading ? <Spinner/> : loggedIn && (
 						<Menu>
 							<MenuButton
 								as={Button}
@@ -119,16 +124,18 @@ export const Navbar = ({ loggedIn, setLoggedIn}: { loggedIn: boolean, setLoggedI
 								background="gray.700"
 								minW={0}
 								ms={6}
+								disabled={isError}
 							>
 								<Avatar
 									size="sm"
-									name="Pritesh"
+									src={data?.data.images.length !==0 ? data?.data.images[0].url : undefined}
+									name={data?.data.display_name}
 									background="gray.700"
 									color="white"
 								/>
 							</MenuButton>
 							<MenuList>
-								<MenuItem>Profile</MenuItem>
+								<MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
 								<MenuItem onClick={logOut}>Log out</MenuItem>
 							</MenuList>
 						</Menu>

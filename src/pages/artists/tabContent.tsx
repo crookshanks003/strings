@@ -6,7 +6,7 @@ export function TabContent({ items }: { items: Artist[] }) {
 	return (
 		<SimpleGrid minChildWidth="300px" spacing="8" mt={8}>
 			{items.map((artist, index) => (
-				<Box mb={2} textAlign="center">
+				<Box mb={2} textAlign="center" key={index}>
 					<Link href={artist.external_urls.spotify} isExternal>
 							<Image
 								mx="auto"
