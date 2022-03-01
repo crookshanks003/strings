@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { QueryClient, QueryClientProvider } from "react-query";
-import {Box} from "@chakra-ui/react";
 import { getRefreshedToken } from "./services/api/auth";
 import { setLocalStorage } from "./services/utils";
 
