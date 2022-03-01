@@ -15,7 +15,7 @@ import App from "./App";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<BrowserRouter basename={process.env.PUBLIC_URL}>
+		<BrowserRouter>
 			<ChakraProvider theme={theme}>
 				<App />
 			</ChakraProvider>
