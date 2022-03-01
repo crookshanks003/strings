@@ -12,38 +12,47 @@ interface QueryReturn<T> {
 }
 
 const client = axios.create({ baseURL: "https://api.spotify.com/v1/me/" });
-const access_token = localStorage.getItem("access_token");
-let config = {
-	headers: {
-		Authorization: `Bearer ${access_token}`,
-	},
-};
+
+function getConfig() {
+	const access_token = localStorage.getItem("access_token");
+	let config = {
+		headers: {
+			Authorization: `Bearer ${access_token}`,
+		},
+	};
+	return config;
+}
 
 export function getTopTracks(time_range: timeRange) {
 	return client.get<any, AxiosResponse<QueryReturn<Track>>>(
 		`top/tracks?time_range=${time_range}&limit=50`,
-		config
+		getConfig()
 	);
 }
 
 export function getTopArtists(time_range: timeRange) {
 	return client.get<any, AxiosResponse<QueryReturn<Artist>>>(
 		`top/artists?time_range=${time_range}&limit=20`,
-		config
+		getConfig()
 	);
 }
 
 export function getRecentlyPlayed() {
 	return client.get<
 		any,
-		AxiosResponse<QueryReturn<{ context: any; played_at: string; track: Track }>>
-	>("player/recently-played", config);
+		AxiosResponse<
+			QueryReturn<{ context: any; played_at: string; track: Track }>
+		>
+	>("player/recently-played", getConfig());
 }
 
 export function getUserProfile() {
-	return client.get<any, AxiosResponse<User>>("/", config);
+	return client.get<any, AxiosResponse<User>>("/", getConfig());
 }
 
 export function getCurrentlyPlaying() {
-	return client.get<any, AxiosResponse<CurrentTrack>>("player/currently-playing", config);
+	return client.get<any, AxiosResponse<CurrentTrack>>(
+		"player/currently-playing",
+		getConfig()
+	);
 }

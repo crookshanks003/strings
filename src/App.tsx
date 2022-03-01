@@ -22,7 +22,7 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	useEffect(() => {
-		const token = localStorage.getItem("access_token");
+		let token = localStorage.getItem("access_token");
 		const expires_at = localStorage.getItem("expires_at");
 		const refresh_token = localStorage.getItem("refresh_token");
 		if (!token) {
